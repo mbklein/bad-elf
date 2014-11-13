@@ -34,7 +34,7 @@ gem 'draper'
 gem 'omniauth-facebook'
 
 group :production do
-  gem 'postgres'
+  gem 'pg'
 end
 
 group :development do

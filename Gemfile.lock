@@ -101,8 +101,6 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     pg (0.17.1)
-    postgres (0.8.1)
-      pg (~> 0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -192,7 +190,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   omniauth-facebook
-  postgres
+  pg
   pry-byebug
   pry-rails
   rails (= 4.1.7)
