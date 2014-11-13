@@ -78,17 +78,19 @@ class ExchangesController < ApplicationController
 
   private
     def authorize!
+      redirect_url = exchanges_url
       authorized = case params['action']
       when 'index'
         true
       when 'show'
         @exchange.participating?(current_user) or current_user == @exchange.owner
       when 'new', 'create', 'join'
+        redirect_url = signin_url
         current_user.present?
       when 'edit', 'update', 'destroy'
         current_user == @exchange.owner
       end
-      redirect_to exchanges_url, notice: I18n.t("exchange.auth.#{params['action']}") unless authorized
+      redirect_to redirect_url, notice: I18n.t("exchange.auth.#{params['action']}") unless authorized
       authorized
     end
     

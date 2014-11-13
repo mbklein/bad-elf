@@ -26,8 +26,10 @@
         <td><%= link_to exchange.join_link, exchange.join_link %></td>
         <td>
           <%= link_to glyph(:search,{}), exchange %>
-          <%= link_to_if exchange.owner == current_user, glyph(:pencil,{}), edit_exchange_path(exchange) %>
-          <%= link_to_if exchange.owner == current_user, glyph(:trash,{}), exchange, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% if exchange.owner == current_user %>
+            <%= link_to glyph(:pencil,{}), edit_exchange_path(exchange) %>
+            <%= link_to glyph(:trash,{}), exchange, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
         </td>
       </tr>
     <% end %>
@@ -36,4 +38,6 @@
 
 <br>
 
-<%= link_to t('headings.new_exchange'), new_exchange_path, class: 'btn btn-default' %>
+<% if current_user.present? %>
+  <%= link_to t('headings.new_exchange'), new_exchange_path, class: 'btn btn-default' %>
+<% end %>
