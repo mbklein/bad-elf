@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Secretsanta</title>
+  <meta charset="utf-8">
+  <title>Hi!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js", "https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js" %>
+  <![endif]-->
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= nav_bar brand: t('project'), fixed: :top do %>
+    <%= menu_group pull: :right do %>
+      <% if current_user.present? %>
+        <%= menu_item current_user.name, edit_user_path(current_user) %>
+        <%= menu_item t('sign_out'), signout_path %>
+      <% else %>
+        <%= menu_item t('sign_in'), signin_path %>
+      <% end %>
+    <% end %>
+    <%= menu_group do %>
+      <%= menu_item t('headings.my_exchanges'), exchanges_path %>
+      <%#= menu_item t('headings.new_exchange'), new_exchange_path %>
+      <% if current_user.present? and current_user.address.blank? %>
+        <%= menu_item t('headings.update_shipping'), edit_user_path(current_user), class: 'urgent' %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <div class="container">
+    <%= bootstrap_flash %>
 
-<%= yield %>
-
+    <%= yield %>
+  </div>
 </body>
 </html>

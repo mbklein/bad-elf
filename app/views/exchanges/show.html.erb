@@ -1,24 +1,13 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @exchange.name %></h1>
+<p class="lead"><%= @exchange.description %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @exchange.name %>
-</p>
+<dl>
+<dt>Deadline</dt>
+<dd><%= @exchange.deadline %></dd>
 
-<p>
-  <strong>Description:</strong>
-  <%= @exchange.description %>
-</p>
+<dt>Owner</dt>
+<dd><%= @exchange.owner.name %></dd>
 
-<p>
-  <strong>Deadline:</strong>
-  <%= @exchange.deadline %>
-</p>
-
-<p>
-  <strong>Owner:</strong>
-  <%= @exchange.owner_id %>
-</p>
-
-<%= link_to 'Edit', edit_exchange_path(@exchange) %> |
-<%= link_to 'Back', exchanges_path %>
+<dt>Join link</dt>
+<dd><%= link_to @exchange.join_link, @exchange.join_link %></dd>
+</dl>

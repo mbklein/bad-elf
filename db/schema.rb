@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112030556) do
+ActiveRecord::Schema.define(version: 20141113154654) do
 
   create_table "assignments", force: true do |t|
     t.integer  "exchange_id"
-    t.integer  "santa_id"
+    t.integer  "elf_id"
     t.integer  "recipient_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -24,15 +24,17 @@ ActiveRecord::Schema.define(version: 20141112030556) do
   create_table "exchanges", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "deadline"
+    t.date     "deadline"
     t.integer  "owner_id"
+    t.string   "invite_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "closed"
   end
 
   create_table "users", force: true do |t|
-    t.string   "email"
     t.string   "name"
+    t.string   "email"
     t.string   "avatar"
     t.text     "address"
     t.datetime "created_at"

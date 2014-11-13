@@ -1,13 +1,16 @@
-<h1>Listing exchanges</h1>
+<h1><%=t('headings.my_exchanges')%></h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
       <th>Deadline</th>
       <th>Owner</th>
-      <th colspan="3"></th>
+      <th>Participants</th>
+      <th>Status</th>
+      <th>Participating?</th>
+      <th>Join Link</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -15,12 +18,17 @@
     <% @exchanges.each do |exchange| %>
       <tr>
         <td><%= exchange.name %></td>
-        <td><%= exchange.description %></td>
         <td><%= exchange.deadline %></td>
-        <td><%= exchange.owner_id %></td>
-        <td><%= link_to 'Show', exchange %></td>
-        <td><%= link_to 'Edit', edit_exchange_path(exchange) %></td>
-        <td><%= link_to 'Destroy', exchange, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= exchange.owner.name %></td>
+        <td><%= exchange.assignments.length %></td>
+        <td><%= exchange.closed ? 'Close' : 'Open' %></td>
+        <td><%= glyph(exchange.participating?(current_user) ? :ok : :remove, {}) %></td>
+        <td><%= link_to exchange.join_link, exchange.join_link %></td>
+        <td>
+          <%= link_to glyph(:search,{}), exchange %>
+          <%= link_to_if exchange.owner == current_user, glyph(:pencil,{}), edit_exchange_path(exchange) %>
+          <%= link_to_if exchange.owner == current_user, glyph(:trash,{}), exchange, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +36,4 @@
 
 <br>
 
-<%= link_to 'New Exchange', new_exchange_path %>
+<%= link_to t('headings.new_exchange'), new_exchange_path, class: 'btn btn-default' %>

@@ -3,11 +3,13 @@
 one:
   name: MyString
   description: MyText
-  deadline: 2014-11-11 20:53:36
+  deadline: 2014-11-12 14:57:12
   owner_id: 1
+  invite_code: MyString
 
 two:
   name: MyString
   description: MyText
-  deadline: 2014-11-11 20:53:36
+  deadline: 2014-11-12 14:57:12
   owner_id: 1
+  invite_code: MyString

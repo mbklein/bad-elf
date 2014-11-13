@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action do
+    redirect_to edit_user_path(@user) unless ['edit','update'].include?(params['action'])
+  end
+  
   # GET /users
   # GET /users.json
   def index
@@ -10,6 +13,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    redirect_to root_url if @user.nil?
   end
 
   # GET /users/new
@@ -19,6 +23,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    return redirect_to root_url unless @user.present? and @user == current_user
   end
 
   # POST /users
@@ -40,9 +45,10 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    return redirect_to root_url unless @user.present? and @user == current_user
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to edit_user_path(@user), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -64,14 +70,12 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = current_user
-      if @user.nil?
-        redirect_to controller: 'sessions', action: 'new'
-      end
+      user_id = params[:id] || session[:user_id]
+      @user = UserDecorator.find(user_id) rescue nil
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :name, :address)
+      params.require(:user).permit(:name, :email, :avatar, :address)
     end
 end

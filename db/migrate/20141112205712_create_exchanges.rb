@@ -3,8 +3,9 @@ class CreateExchanges < ActiveRecord::Migration
     create_table :exchanges do |t|
       t.string :name
       t.text :description
-      t.datetime :deadline
+      t.date :deadline
       t.integer :owner_id
+      t.string :invite_code
 
       t.timestamps
     end

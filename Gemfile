@@ -27,15 +27,20 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'twitter-bootstrap-rails'
-gem 'less-rails'
+gem 'bootstrap_form'
+gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-generators'
+
+gem 'draper'
 
 gem 'omniauth-facebook'
 
 group :development do
-  gem 'pry'
+  gem 'pry-rails'
   gem 'pry-byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'xray-rails'
 end
 
 # Use ActiveModel has_secure_password
