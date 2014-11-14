@@ -14,5 +14,3 @@
  *= require_tree .
  *= require_self
  */
-
-.navbar-nav > li > a.urgent { color: red !important; }

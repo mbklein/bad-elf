@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :exchanges
+  resources :exchanges do
+    member do
+      post :shuffle
+    end
+  end
   get '/join/:id', to: 'exchanges#join', as: 'join_exchange'
 
   resources :users

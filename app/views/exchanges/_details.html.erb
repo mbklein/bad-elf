@@ -1,0 +1,8 @@
+<h1><%= @exchange.name %></h1>
+<p class="lead"><%= @exchange.description %></p>
+
+<dl>
+  <%= dt_item_if(@exchange.deadline, 'Deadline', @exchange.deadline) %>
+  <%= dt_item_if(@exchange.owner.name, 'Owner', @exchange.owner.name) %>
+  <%= dt_item_if(@exchange.invite_code, 'Join Link', link_to(@exchange.join_link, @exchange.join_link)) %>
+</dl>

@@ -21,7 +21,7 @@
         <td><%= exchange.deadline %></td>
         <td><%= exchange.owner.name %></td>
         <td><%= exchange.assignments.length %></td>
-        <td><%= exchange.closed ? 'Close' : 'Open' %></td>
+        <td><%= exchange.closed ? 'Closed' : 'Open' %></td>
         <td><%= glyph(exchange.participating?(current_user) ? :ok : :remove, {}) %></td>
         <td><%= link_to exchange.join_link, exchange.join_link %></td>
         <td>
@@ -29,6 +29,7 @@
           <% if exchange.owner == current_user %>
             <%= link_to glyph(:pencil,{}), edit_exchange_path(exchange) %>
             <%= link_to glyph(:trash,{}), exchange, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to glyph(:refresh,{}), shuffle_exchange_path(exchange), method: :post%>
           <% end %>
         </td>
       </tr>

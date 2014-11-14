@@ -1,5 +1,5 @@
 class ExchangesController < ApplicationController
-  before_action :set_exchange, only: [:show, :edit, :update, :destroy]
+  before_action :set_exchange, only: [:show, :edit, :update, :destroy, :shuffle]
   before_action :authorize!
 
   # GET /exchanges
@@ -23,16 +23,20 @@ class ExchangesController < ApplicationController
   end
 
   def join
-    @exchange = Exchange.where(invite_code: params[:id]).first
-    return redirect_to exchanges_url, notice: "Unrecognized invitiation code" if @exchange.nil?
-    return redirect_to exchanges_url, notice: "This exchange is currently closed to new participants." if @exchange.closed
-    notice = if @exchange.participating? current_user
-      "You are already participating in '#{@exchange.name}.'"
+    @exchange = Exchange.where(invite_code: params[:id]).first.decorate
+    if params[:confirm]
+      return redirect_to exchanges_url, notice: "Unrecognized invitiation code" if @exchange.nil?
+      return redirect_to exchanges_url, notice: "This exchange is currently closed to new participants." if @exchange.closed
+      notice = if @exchange.participating? current_user
+        "You are already participating in '#{@exchange.name}.'"
+      else
+        @exchange.assignments << Assignment.create(elf: current_user)
+        "You have succesfully joined '#{@exchange.name}.'"
+      end
+      redirect_to exchanges_url, notice: notice
     else
-      @exchange.assignments << Assignment.create(elf: current_user)
-      "You have succesfully joined '#{@exchange.name}.'"
+      render
     end
-    redirect_to exchanges_url, notice: notice
   end
   
   # POST /exchanges
@@ -75,6 +79,14 @@ class ExchangesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def shuffle
+    @exchange.shuffle!
+    respond_to do |format|
+      format.html { redirect_to exchanges_url, notice: 'Exchange was successfully shuffled.' }
+      format.json { head :no_content }
+    end
+  end
 
   private
     def authorize!
@@ -87,7 +99,7 @@ class ExchangesController < ApplicationController
       when 'new', 'create', 'join'
         redirect_url = signin_url
         current_user.present?
-      when 'edit', 'update', 'destroy'
+      when 'edit', 'update', 'destroy', 'shuffle'
         current_user == @exchange.owner
       end
       redirect_to redirect_url, notice: I18n.t("exchange.auth.#{params['action']}") unless authorized

@@ -20,6 +20,7 @@
   <%= nav_bar brand: t('project'), fixed: :top, responsive: true do %>
     <%= menu_group pull: :right do %>
       <% if current_user.present? %>
+        <%=  %>
         <%= menu_item current_user.name, edit_user_path(current_user) %>
         <%= menu_item t('sign_out'), signout_path %>
       <% else %>
@@ -28,9 +29,8 @@
     <% end %>
     <%= menu_group do %>
       <%= menu_item t('headings.my_exchanges'), exchanges_path %>
-      <%#= menu_item t('headings.new_exchange'), new_exchange_path %>
       <% if current_user.present? and current_user.address.blank? %>
-        <%= menu_item t('headings.update_shipping'), edit_user_path(current_user), class: 'urgent' %>
+        <form class="navbar-form navbar-left"><%= link_to(t('headings.update_shipping'), edit_user_path(current_user), class: 'btn btn-danger') %></form>
       <% end %>
     <% end %>
   <% end %>

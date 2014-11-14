@@ -21,6 +21,10 @@
 
 en:
   project: "Secret Santa Swap"
+  assignment:
+    unassigned: "You are participating in this exchange, but your recipient hasn't been assigned."
+  user:
+    address_missing: "Address not provided"
   headings:
     my_exchanges: "My Exchanges"
     update_shipping: "Update Shipping Address!"

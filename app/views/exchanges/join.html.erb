@@ -1,0 +1,4 @@
+<%= render partial: 'details' %>
+
+<%= link_to "Join", join_exchange_path(@exchange.invite_code, confirm: true), class: 'btn btn-primary' %>
+<%= link_to "Cancel", exchanges_url, class: 'btn btn-default' %>

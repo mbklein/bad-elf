@@ -1,13 +1,11 @@
-<h1><%= @exchange.name %></h1>
-<p class="lead"><%= @exchange.description %></p>
+<%= render partial: 'details' %>
 
-<dl>
-<dt>Deadline</dt>
-<dd><%= @exchange.deadline %></dd>
-
-<dt>Owner</dt>
-<dd><%= @exchange.owner.name %></dd>
-
-<dt>Join link</dt>
-<dd><%= link_to @exchange.join_link, @exchange.join_link %></dd>
-</dl>
+<% if current_user.participating? @exchange %>
+  <% assignment = current_user.elf_assignments.where(exchange_id: @exchange.id).first %>
+  <% if assignment.recipient.nil? %>
+    <h4><%= t('assignment.unassigned') %></h4>
+  <% else %>
+    <h4>Recipient Details</h4>
+    <%= render partial: 'users/details', locals: { user: assignment.recipient.decorate } %>
+  <% end %>
+<% end %> 

@@ -30,4 +30,20 @@ class Exchange < ActiveRecord::Base
   def assigned?
     assignments.all? { |a| a.recipient.present? }
   end
+  
+  def clear!
+    assignments.each { |a| a.update_attribute :recipient, nil }
+  end
+  
+  def shuffle!
+    update_attribute(:closed, true)
+    clear!
+    user_map = participants.shuffle
+    user_map << user_map.first
+    while user_map.length > 1
+      elf = user_map.shift
+      recipient = user_map.first
+      assignments.where(elf_id: elf.id).first.update_attribute(:recipient_id, recipient.id)
+    end
+  end
 end
