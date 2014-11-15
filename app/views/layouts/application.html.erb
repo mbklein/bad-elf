@@ -17,7 +17,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= nav_bar brand: t('project'), fixed: :top, responsive: true do %>
+  <%= nav_bar brand: '&nbsp;'.html_safe, fixed: :top, responsive: true do %>
     <%= menu_group pull: :right do %>
       <% if current_user.present? %>
         <%=  %>
