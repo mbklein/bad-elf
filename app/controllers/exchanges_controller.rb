@@ -97,7 +97,7 @@ class ExchangesController < ApplicationController
       when 'show'
         @exchange.participating?(current_user) or current_user == @exchange.owner
       when 'new', 'create', 'join'
-        redirect_url = signin_url
+        redirect_url = signin_url(return_path: request.path)
         current_user.present?
       when 'edit', 'update', 'destroy', 'shuffle'
         current_user == @exchange.owner
