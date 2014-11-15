@@ -38,13 +38,13 @@ class ExchangesController < ApplicationController
       render
     end
   end
-  
+
   # POST /exchanges
   # POST /exchanges.json
   def create
     @exchange = Exchange.new(exchange_params)
     @exchange.owner = current_user
-    
+
     respond_to do |format|
       if @exchange.save
         format.html { redirect_to exchanges_url, notice: 'Exchange was successfully created.' }
@@ -79,11 +79,11 @@ class ExchangesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def shuffle
     @exchange.shuffle!
     respond_to do |format|
-      format.html { redirect_to exchanges_url, notice: 'Exchange was successfully shuffled.' }
+      format.html { redirect_to exchange_url(@exchange), notice: 'Exchange was successfully shuffled.' }
       format.json { head :no_content }
     end
   end
@@ -105,7 +105,7 @@ class ExchangesController < ApplicationController
       redirect_to redirect_url, notice: I18n.t("exchange.auth.#{params['action']}") unless authorized
       authorized
     end
-    
+
     # Use callbacks to share common setup or constraints between actions.
     def set_exchange
       @exchange = ExchangeDecorator.find(params[:id])

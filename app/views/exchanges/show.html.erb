@@ -8,4 +8,8 @@
     <h4>Recipient Details</h4>
     <%= render partial: 'users/details', locals: { user: assignment.recipient.decorate } %>
   <% end %>
-<% end %> 
+<% end %>
+
+<% if current_user == @exchange.owner %>
+  <%= link_to t('assignment.shuffle'), shuffle_exchange_path(@exchange), method: :post, class: 'btn btn-primary' %>
+<% end %>

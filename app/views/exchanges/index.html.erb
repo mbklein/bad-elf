@@ -1,15 +1,16 @@
 <h1><%=t('headings.my_exchanges')%></h1>
 
+<div class="container-fluid">
 <table class="table">
   <thead>
     <tr>
       <th>Name</th>
       <th>Deadline</th>
-      <th>Owner</th>
-      <th>Participants</th>
-      <th>Status</th>
-      <th>Participating?</th>
-      <th>Join Link</th>
+      <th class="hidden-xs">Owner</th>
+      <th>#</th>
+      <th class="hidden-xs">Status</th>
+      <th>In?</th>
+      <th class="hidden-xs hidden-sm">Join Link</th>
       <th></th>
     </tr>
   </thead>
@@ -17,25 +18,24 @@
   <tbody>
     <% @exchanges.each do |exchange| %>
       <tr>
-        <td><%= exchange.name %></td>
+        <td><%= link_to exchange.name, exchange %></td>
         <td><%= exchange.deadline %></td>
-        <td><%= exchange.owner.name %></td>
+        <td class="hidden-xs"><%= exchange.owner.name %></td>
         <td><%= exchange.assignments.length %></td>
-        <td><%= exchange.closed ? 'Closed' : 'Open' %></td>
+        <td class="hidden-xs"><%= exchange.closed ? 'Closed' : 'Open' %></td>
         <td><%= glyph(exchange.participating?(current_user) ? :ok : :remove, {}) %></td>
-        <td><%= link_to exchange.join_link, exchange.join_link %></td>
-        <td>
-          <%= link_to glyph(:search,{}), exchange %>
+        <td class="hidden-xs hidden-sm"><%= link_to exchange.join_link, exchange.join_link %></td>
+        <td class="text-nowrap">
           <% if exchange.owner == current_user %>
             <%= link_to glyph(:pencil,{}), edit_exchange_path(exchange) %>
             <%= link_to glyph(:trash,{}), exchange, method: :delete, data: { confirm: 'Are you sure?' } %>
-            <%= link_to glyph(:refresh,{}), shuffle_exchange_path(exchange), method: :post%>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
 
 <br>
 
