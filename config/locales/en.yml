@@ -25,6 +25,10 @@ en:
     unassigned: "You are participating in this exchange, but your recipient hasn't been assigned."
   user:
     address_missing: "Address not provided"
+    ship_warning: |
+      You have not yet entered your shipping address! Please %{link_text}
+      so that you can receive your gifts!
+    edit_your_settings: 'edit your settings'
   headings:
     my_exchanges: "My Exchanges"
     update_shipping: "Update Shipping Address!"

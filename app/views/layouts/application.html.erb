@@ -29,14 +29,18 @@
     <% end %>
     <%= menu_group do %>
       <%= menu_item t('headings.my_exchanges'), exchanges_path %>
-      <% if current_user.present? and current_user.address.blank? %>
-        <form class="navbar-form navbar-left"><%= link_to(t('headings.update_shipping'), edit_user_path(current_user), class: 'btn btn-danger') %></form>
-      <% end %>
     <% end %>
   <% end %>
   <div class="container">
+    <% if current_user.present? and current_user.address.blank? %>
+      <div class="alert alert-warning">
+        <%=
+          settings_link = link_to(t('user.edit_your_settings'), edit_user_path(current_user)).html_safe
+          t('user.ship_warning', link_text: settings_link).html_safe
+        %>
+      </div>
+    <% end %>
     <%= bootstrap_flash %>
-
     <%= yield %>
   </div>
 </body>
