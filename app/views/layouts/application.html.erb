@@ -24,7 +24,7 @@
         <%= menu_item current_user.name, edit_user_path(current_user) %>
         <%= menu_item t('sign_out'), signout_path %>
       <% else %>
-        <%= menu_item t('sign_in'), signin_path %>
+        <%= menu_item t('sign_in'), signin_path, class: 'menu-signin' %>
       <% end %>
     <% end %>
     <%= menu_group do %>
@@ -43,5 +43,6 @@
     <%= bootstrap_flash %>
     <%= yield %>
   </div>
+  <%= render partial: 'login_modal' %>
 </body>
 </html>
