@@ -20,7 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  project: "Secret Santa Swap"
+  project: "Bad Elf!"
   assignment:
     unassigned: "You are participating in this exchange, but your recipient hasn't been assigned."
   user:
