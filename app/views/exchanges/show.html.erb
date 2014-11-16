@@ -5,11 +5,17 @@
   <% if assignment.recipient.nil? %>
     <h4><%= t('assignment.unassigned') %></h4>
   <% else %>
-    <h4>Recipient Details</h4>
+    <h3>Recipient Details</h3>
     <%= render partial: 'users/details', locals: { user: assignment.recipient.decorate } %>
   <% end %>
 <% end %>
 
 <% if current_user == @exchange.owner %>
+  <h3>Participants</h3>
+  <ul class="list-unstyled">
+  <% @exchange.participants.each do |participant| %>
+    <li><%= participant.name %></li>
+  <% end %>
+  </ul>
   <%= link_to t('assignment.shuffle'), shuffle_exchange_path(@exchange), method: :post, class: 'btn btn-primary' %>
 <% end %>
