@@ -32,6 +32,8 @@ gem 'bootstrap-generators'
 gem 'draper'
 
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
 gem 'cancancan'
 
 group :production do
