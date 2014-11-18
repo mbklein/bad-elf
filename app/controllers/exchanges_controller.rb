@@ -9,7 +9,14 @@ class ExchangesController < ApplicationController
   # GET /exchanges
   # GET /exchanges.json
   def index
-    @exchanges = ExchangeDecorator.decorate_collection(Exchange.for_user(current_user))
+    visible = if current_user.nil?
+      Exchange.none
+    elsif current_user.admin?
+      Exchange.all
+    else
+      Exchange.for_user(current_user)
+    end
+    @exchanges = ExchangeDecorator.decorate_collection(visible)
   end
 
   # GET /exchanges/1
