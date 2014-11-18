@@ -1,6 +1,10 @@
 class ExchangesController < ApplicationController
   before_action :set_exchange, only: [:show, :edit, :update, :destroy, :shuffle]
-  before_action :authorize!
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_path = [:new, :create, :join].include?(exception.action) ? signin_url(return_path: request.path) : exchanges_url
+    redirect_to redirect_path, :alert => I18n.t("exchange.auth.#{exception.action}")
+  end
 
   # GET /exchanges
   # GET /exchanges.json
@@ -11,19 +15,23 @@ class ExchangesController < ApplicationController
   # GET /exchanges/1
   # GET /exchanges/1.json
   def show
+    authorize! :show, @exchange
   end
 
   # GET /exchanges/new
   def new
+    authorize! :create, Exchange
     @exchange = Exchange.new owner: current_user
   end
 
   # GET /exchanges/1/edit
   def edit
+    authorize! :update, @exchange
   end
 
   def join
-    @exchange = Exchange.where(invite_code: params[:id]).first.decorate
+    @exchange = Exchange.where(invite_code: params[:id]).first.decorate rescue nil
+    authorize! :join, @exchange
     if params[:confirm]
       return redirect_to exchanges_url, notice: "Unrecognized invitiation code" if @exchange.nil?
       return redirect_to exchanges_url, notice: "This exchange is currently closed to new participants." if @exchange.closed
@@ -42,6 +50,7 @@ class ExchangesController < ApplicationController
   # POST /exchanges
   # POST /exchanges.json
   def create
+    authorize! :create, Exchange
     @exchange = Exchange.new(exchange_params)
     @exchange.owner = current_user
 
@@ -59,6 +68,7 @@ class ExchangesController < ApplicationController
   # PATCH/PUT /exchanges/1
   # PATCH/PUT /exchanges/1.json
   def update
+    authorize! :update, @exchange
     respond_to do |format|
       if @exchange.update(exchange_params)
         format.html { redirect_to exchanges_url, notice: 'Exchange was successfully updated.' }
@@ -73,6 +83,7 @@ class ExchangesController < ApplicationController
   # DELETE /exchanges/1
   # DELETE /exchanges/1.json
   def destroy
+    authorize! :destroy, @exchange
     @exchange.destroy
     respond_to do |format|
       format.html { redirect_to exchanges_url, notice: 'Exchange was successfully destroyed.' }
@@ -81,6 +92,7 @@ class ExchangesController < ApplicationController
   end
 
   def shuffle
+    authorize! :update, @exchange
     @exchange.shuffle!
     respond_to do |format|
       format.html { redirect_to exchange_url(@exchange), notice: 'Exchange was successfully shuffled.' }
@@ -89,23 +101,6 @@ class ExchangesController < ApplicationController
   end
 
   private
-    def authorize!
-      redirect_url = exchanges_url
-      authorized = case params['action']
-      when 'index'
-        true
-      when 'show'
-        @exchange.participating?(current_user) or current_user == @exchange.owner
-      when 'new', 'create', 'join'
-        redirect_url = signin_url(return_path: request.path)
-        current_user.present?
-      when 'edit', 'update', 'destroy', 'shuffle'
-        current_user == @exchange.owner
-      end
-      redirect_to redirect_url, notice: I18n.t("exchange.auth.#{params['action']}") unless authorized
-      authorized
-    end
-
     # Use callbacks to share common setup or constraints between actions.
     def set_exchange
       @exchange = ExchangeDecorator.find(params[:id])

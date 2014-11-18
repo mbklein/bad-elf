@@ -32,6 +32,7 @@ gem 'bootstrap-generators'
 gem 'draper'
 
 gem 'omniauth-facebook'
+gem 'cancancan'
 
 group :production do
   gem 'pg'

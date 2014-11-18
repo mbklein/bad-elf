@@ -4,6 +4,10 @@ class UsersController < ApplicationController
     redirect_to edit_user_path(@user) unless ['edit','update'].include?(params['action'])
   end
   
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+
   # GET /users
   # GET /users.json
   def index
@@ -23,7 +27,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    return redirect_to root_url unless @user.present? and @user == current_user
+    authorize! :edit, @user
   end
 
   # POST /users
@@ -45,7 +49,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    return redirect_to root_url unless @user.present? and @user == current_user
+    authorize! :edit, @user
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to edit_user_path(@user), notice: 'User was successfully updated.' }
@@ -60,6 +64,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    authorize! :destroy, @user
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }

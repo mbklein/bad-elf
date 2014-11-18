@@ -35,9 +35,9 @@ en:
   exchange:
     auth:
       show: "You cannot view an exchange you're not participating in."
-      new: "You must log in to continue."
-      create: "You must log in to continue."
-      join: "You must log in to continue."
+      new: "You must sign in to continue."
+      create: "You must sign in to continue."
+      join: "You must sign in to continue."
       edit: "You are not authorized to edit this exchange."
       update: "You are not authorized to update this exchange."
       destroy: "You are not authorized to destroy this exchange."

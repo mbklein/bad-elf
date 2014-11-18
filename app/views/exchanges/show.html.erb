@@ -10,7 +10,7 @@
   <% end %>
 <% end %>
 
-<% if current_user == @exchange.owner %>
+<% if can? :manage, @exchange %>
   <h3>Participants</h3>
   <ul class="list-unstyled">
   <% @exchange.participants.each do |participant| %>
