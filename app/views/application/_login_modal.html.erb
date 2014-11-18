@@ -10,7 +10,6 @@
       <div class="modal-body">
         <div class="text-center">
           <%= link_to image_tag('login-facebook.png'), "/auth/facebook"      if ENV['FACEBOOK_KEY']%>
-          <%= link_to image_tag('login-twitter.png'),  "/auth/twitter"       if ENV['TWITTER_KEY']%>
           <%= link_to image_tag('login-google.png'),   "/auth/google_oauth2" if ENV['GOOGLE_KEY']%>
         </div>
       </div>
