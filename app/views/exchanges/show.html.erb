@@ -11,12 +11,12 @@
 <% end %>
 
 <% if can? :manage, @exchange %>
-  <h3>Participants</h3>
+  <h3>Participants <small><%=@exchange.participants.length%></small></h3>
   <ul class="list-unstyled">
-  <% @exchange.participants.each do |participant| %>
+  <% @exchange.participants.sort_by(:name).each do |participant| %>
     <li>
       <%= content_tag(:span, class: participant.address.present? ? 'text-success' : 'text-danger') do %>
-        <%= glyph(:envelope, {}) %> 
+        <%= glyph(:envelope, {}) %>
       <% end %>
       <%= participant.name %>
     </li>

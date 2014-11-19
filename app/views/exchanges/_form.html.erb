@@ -13,7 +13,8 @@
 
   <%= f.text_field :name %>
   <%= f.text_area :description %>
-  <%= f.text_field :deadline, 'data-provide'=>'datepicker' %>
+  <% display_date = @exchange.deadline ? @exchange.deadline.strftime("%m/%d/%Y") : '' %>
+  <%= f.text_field :deadline, 'data-provide'=>'datepicker', value: display_date %>
   <%= f.select :closed, [['Open',false],['Closed',true]], { label: 'Status' } %>
   <%= f.text_field :owner, value: @exchange.owner.name, disabled: true %>
   <%= f.submit class: 'btn btn-primary' %> <%= link_to 'Cancel', exchanges_path, class: 'btn btn-default' %>
