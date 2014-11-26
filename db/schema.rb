@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118155806) do
+ActiveRecord::Schema.define(version: 20141126041129) do
 
   create_table "assignments", force: true do |t|
     t.integer  "exchange_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20141118155806) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
+    t.text     "additional_info"
   end
 
 end

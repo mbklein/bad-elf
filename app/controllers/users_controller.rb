@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action do
-    redirect_to edit_user_path(@user) unless ['edit','update'].include?(params['action'])
-  end
-  
+  before_action :edit_current_user, except: [:edit, :update]
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end
@@ -18,6 +16,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     redirect_to root_url if @user.nil?
+    authorize! :read, @user
   end
 
   # GET /users/new
@@ -73,6 +72,10 @@ class UsersController < ApplicationController
   end
 
   private
+    def edit_current_user
+      redirect_to edit_user_path(@user) if @user == current_user
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       user_id = params[:id] || session[:user_id]
@@ -81,6 +84,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :avatar, :address)
+      params.require(:user).permit(:name, :email, :avatar, :address, :additional_info)
     end
 end

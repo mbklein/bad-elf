@@ -11,7 +11,8 @@
     </div>
   <% end %>
 
-  <%= f.text_area :address, rows: 6, label: 'Shipping Address' %>
+  <p><%= f.text_area :address, rows: 6, label: t('user.shipping_address'), placeholder: t('user.shipping_address_help') %>
+  <p><%= f.text_area :additional_info, rows: 6, label: t('user.additional_info'), placeholder: t('user.additional_info_help') %>
 
   <div class="actions">
     <%= f.submit %>

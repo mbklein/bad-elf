@@ -25,10 +25,13 @@ en:
     unassigned: "You are participating in this exchange, but your recipient hasn't been assigned."
   user:
     address_missing: "Address not provided"
-    ship_warning: |
-      You have not yet entered your shipping address! Please %{link_text}
-      so that you can receive your gifts!
+    ship_warning: 'You have not yet entered your shipping address! Please %{link_text} so that you can receive your gifts!'
     edit_your_settings: 'edit your settings'
+    shipping_address: 'Shipping Address'
+    shipping_address_help: "Don't leave this blank or you'll never get anything!"
+    additional_info: 'Additional Info'
+    additional_info_help: 'Favorite color(s), t-shirt/hat/boot/whatever size, allergies, aversions, whatever you think might help your elf find the perfect gift or avoid a tragic one.'
+    additional_info_missing: "This user has not provided any additional info. You'll have to wing it!"
   headings:
     my_exchanges: "My Exchanges"
     update_shipping: "Update Shipping Address!"
