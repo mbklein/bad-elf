@@ -18,7 +18,7 @@
       <%= content_tag(:span, class: participant.address.present? ? 'text-success' : 'text-danger') do %>
         <%= glyph(:envelope, {}) %>
       <% end %>
-      <%= participant.name %>
+      <%= link_to_if current_user.admin?, participant.name, participant %>
     </li>
   <% end %>
   </ul>
