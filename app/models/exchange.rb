@@ -32,7 +32,7 @@ class Exchange < ActiveRecord::Base
   end
   
   def matched?(one, two)
-    assignments.where(elf_id: one.id).include?(two.id) or assignments.where(elf_id: two.id).include?(one.id)
+    assignments.where(elf_id: one.id, recipient_id: two.id).present? or assignments.where(elf_id: two.id, recipient_id: one.id).present?
   end
   
   def clear!
