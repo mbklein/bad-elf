@@ -31,6 +31,10 @@ class Exchange < ActiveRecord::Base
     assignments.all? { |a| a.recipient.present? }
   end
   
+  def matched?(one, two)
+    assignments.where(elf_id: one.id).include?(two.id) or assignments.where(elf_id: two.id).include?(one.id)
+  end
+  
   def clear!
     assignments.each { |a| a.update_attribute :recipient, nil }
   end
