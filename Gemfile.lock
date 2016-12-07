@@ -46,7 +46,7 @@ GEM
     bootstrap_form (2.5.2)
     builder (3.2.2)
     byebug (9.0.6)
-    cancancan (1.15.0)
+    cancancan (1.9.2)
     coderay (1.1.1)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -208,7 +208,7 @@ DEPENDENCIES
   bootstrap-generators
   bootstrap-sass
   bootstrap_form
-  cancancan
+  cancancan (~> 1.9.2)
   coffee-rails (~> 4.0.0)
   draper
   jbuilder (~> 2.0)

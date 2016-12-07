@@ -35,7 +35,7 @@ gem 'draper'
 
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
-gem 'cancancan'
+gem 'cancancan', '~> 1.9.2'
 
 group :production do
   gem 'pg'
