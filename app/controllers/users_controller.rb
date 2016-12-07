@@ -80,6 +80,7 @@ class UsersController < ApplicationController
     def set_user
       user_id = params[:id] || session[:user_id]
       @user = UserDecorator.find(user_id) rescue nil
+      @display_title = @user.name if @user.present?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

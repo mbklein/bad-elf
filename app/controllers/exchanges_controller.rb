@@ -111,6 +111,7 @@ class ExchangesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_exchange
       @exchange = ExchangeDecorator.find(params[:id])
+      @display_title = @exchange.name if @exchange.present?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
