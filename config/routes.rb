@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  constraints(:host => /bad-elf\.herokuapp\.com/) do
+    match "/(*path)" => redirect {|params, req| "//bad.elf.gifts/#{params[:path]}"},  via: [:get, :post]
+  end
+
   resources :exchanges do
     member do
       post :shuffle
