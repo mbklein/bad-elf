@@ -37,7 +37,7 @@ gem 'omniauth-google-oauth2'
 gem 'cancancan', '~> 1.9.2'
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~> 0.15'
   gem 'rails_12factor'
 end
 
