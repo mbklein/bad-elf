@@ -1,0 +1,8 @@
+<h1>Show Exchange</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.exchange_path(@conn, :edit, @exchange) %></span>
+<span><%= link "Back", to: Routes.exchange_path(@conn, :index) %></span>

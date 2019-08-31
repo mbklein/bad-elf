@@ -1,0 +1,29 @@
+---
+version: '3.4'
+volumes:
+  db:
+services:
+  db:
+    image: postgres:10-alpine
+    read_only: true
+    volumes:
+    - type: volume
+      source: db
+      target: /data
+    - type: volume
+      target: /tmp
+    - type: volume
+      target: /var/log
+    - type: volume
+      target: /var/run
+    environment:
+    - PGDATA=/data
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    ports:
+    - 5432:5432
+    healthcheck:
+      test: "CMD echo 'SELECT 1' | PGPASSWORD=d0ck3r psql --host 127.0.0.1 --username docker --dbname docker --quiet --no-align --tuples-only"
+      interval: 30s
+      timeout: 5s
+      retries: 3

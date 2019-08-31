@@ -1,0 +1,5 @@
+<h1>Edit Exchange</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.exchange_path(@conn, :update, @exchange)) %>
+
+<span><%= link "Back", to: Routes.exchange_path(@conn, :index) %></span>

@@ -1,0 +1,24 @@
+<h1>Listing Exchanges</h1>
+
+<table>
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for exchange <- @exchanges do %>
+    <tr>
+
+      <td>
+        <%= link "Show", to: Routes.exchange_path(@conn, :show, exchange) %>
+        <%= link "Edit", to: Routes.exchange_path(@conn, :edit, exchange) %>
+        <%= link "Delete", to: Routes.exchange_path(@conn, :delete, exchange), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Exchange", to: Routes.exchange_path(@conn, :new) %></span>
