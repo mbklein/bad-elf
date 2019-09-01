@@ -42,12 +42,38 @@ defmodule BadEx.App.AssignmentList do
       else: shuffle_assignments(assignments, attempt + 1)
   end
 
+  def sort([head | []], map) do
+    [map |> Map.get(head.recipient_id)]
+  end
+
+  def sort([_ | tail], map) do
+    with state <- sort(tail, map) do
+      [map |> Map.get(List.first(state).recipient_id) | state]
+    end
+  end
+
+  def sort(assignments) do
+    case assignments |> Enum.any?(fn a -> a.recipient_id |> is_nil() end) do
+      true ->
+        assignments
+
+      false ->
+        map = assignments |> Enum.map(&{&1.elf_id, &1}) |> Enum.into(%{})
+        sort(assignments, map) |> Enum.reverse()
+    end
+  end
+
   def unassign_all(assignments) do
     Enum.map(assignments, &Assignment.assign(&1, recipient: &1.recipient))
   end
 
   def inspect(assignments) do
     IO.puts("#{Enum.count(assignments)}:")
-    Enum.each(assignments, &IO.puts("#{&1.elf.name} -> #{&1.recipient.name}"))
+
+    assignments
+    |> Enum.each(fn
+      %{elf: elf, recipient_id: nil} -> IO.puts("#{elf.name} -> UNASSIGNED")
+      %{elf: elf, recipient: recipient} -> IO.puts("#{elf.name} -> #{recipient.name}")
+    end)
   end
 end
