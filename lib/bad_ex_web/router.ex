@@ -10,6 +10,7 @@ defmodule BadExWeb.Router do
   end
 
   pipeline :api do
+    plug BadExWeb.Context
     plug :accepts, ["json"]
   end
 
@@ -40,6 +41,7 @@ defmodule BadExWeb.Router do
   scope "/auth", BadExWeb do
     pipe_through :browser
 
+    get "/logout", AuthController, :logout
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
   end

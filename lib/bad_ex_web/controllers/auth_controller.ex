@@ -17,4 +17,10 @@ defmodule BadExWeb.AuthController do
         |> redirect(to: "/")
     end
   end
+
+  def logout(conn, _params) do
+    conn
+    |> delete_session(:current_user)
+    |> redirect(to: "/")
+  end
 end
