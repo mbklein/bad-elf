@@ -1,0 +1,28 @@
+---
+version: '3.4'
+services:
+  db:
+    image: healthcheck/postgres:alpine
+    volumes:
+    - ./app-data:/data
+    environment:
+    - PGDATA=/data
+    - POSTGRES_USER=docker
+    - POSTGRES_PASSWORD=d0ck3r
+    ports:
+    - 5432:5432
+  app:
+    depends_on:
+      - db
+    image: mbklein/bad-elf:latest
+    build:
+      context: .
+    environment:
+      - DATABASE_URL=postgres://docker:d0ck3r@db:5432/bad-elf
+      - FACEBOOK_KEY=745145655539237
+      - FACEBOOK_SECRET=829579d24eb81f82252dce0f072bb6ee
+      - GOOGLE_KEY=645865420470-ooqt7u13gin2vc4e7q6m0vd9cokaog1g.apps.googleusercontent.com
+      - GOOGLE_SECRET=AiB_JPVUv13SdvdvrgyyMMOn
+      - SECRET_KEY_BASE=05bf06aba00f7534d426445f97cc1c5f2d419248587325f342cc8bc3ad03d29e7a0be7fe7f4081bcb714d95c2967fd9f8225597d9a276a28738a6a28e722e769
+    ports:
+      - 3000:3000

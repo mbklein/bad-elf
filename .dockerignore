@@ -1,0 +1,7 @@
+.docker-stack
+.ebextensions
+.git
+log/*
+public/assets
+tmp/*
+Jenkinsfile

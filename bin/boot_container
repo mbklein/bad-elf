@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sleep 10
+bundle exec rake db:create db:migrate
+exec bundle exec puma -C config/puma_container.rb

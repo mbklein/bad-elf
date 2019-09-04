@@ -35,6 +35,7 @@ gem 'draper'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'cancancan', '~> 1.9.2'
+gem 'sqlite3'
 
 group :production do
   gem 'pg', '~> 0.15'
@@ -42,7 +43,6 @@ group :production do
 end
 
 group :development do
-  gem 'sqlite3'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'better_errors'
@@ -53,8 +53,8 @@ end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use unicorn as the app server
-gem 'unicorn'
+# Use puma as the app server
+gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
